@@ -31,7 +31,6 @@
 </template>
 
 <script setup>
-import { defineEmits, defineOptions} from 'vue'
 
 const emit = defineEmits(['uploadProducts'])
 

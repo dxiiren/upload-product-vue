@@ -80,7 +80,7 @@
 </template>
 
 <script setup>
-import { defineEmits, defineProps, computed, watch, ref, defineOptions } from 'vue'
+import { computed, watch, ref } from 'vue'
 import { useDebouncedRef } from '@/composables/useDebouncedRef'
 
 defineOptions({
