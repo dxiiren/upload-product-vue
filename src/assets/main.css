@@ -1,0 +1,30 @@
+a {
+  transition: all 0.15s ease;
+}
+
+a:hover {
+  color: #f59e0b;
+  text-decoration: none;
+}
+
+input[type='file'] {
+  margin-top: 20px;
+}
+
+@keyframes progress-bar-stripes {
+  0% {
+    background-position: 1rem 0;
+  }
+  100% {
+    background-position: 0 0;
+  }
+}
+
+@keyframes slide {
+  0% {
+    background-position: 0 0;
+  }
+  100% {
+    background-position: -4000px 0;
+  }
+}
