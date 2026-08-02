@@ -16,19 +16,21 @@ listener.
 add `--host 127.0.0.1` to the dev invocation — but don't commit that change without checking
 the whole team's stack.
 
-## Product table is empty; console logs `Error loading products: AxiosError`
+## Table shows demo rows and a "Demo data" banner; console warns `Backend unreachable`
 
-**Symptom.** The page renders, the upload card and table are visible, but the table shows
-"Showing 0 to 0 of 0 entries" and the browser console logs axios `ERR_NETWORK`/`ECONNREFUSED`
-errors on load and on every search keystroke.
+**Symptom.** The page renders with six sample products (Samsung Galaxy S24, ThinkPad X1
+Carbon, ...), an amber "Demo data" banner above the table, and the browser console logs a
+`Backend unreachable, serving demo data:` warning (axios `ERR_NETWORK`/`ECONNREFUSED`)
+on load and on every search keystroke.
 
 **Cause.** The companion backend at `http://127.0.0.1:8000` isn't running — the base URL is
-hardcoded in `src/views/HomeView.vue` and every list/upload call needs it.
+hardcoded in `src/views/HomeView.vue` and every list/upload call needs it. On fetch failure
+the app serves the static catalogue from `src/data/demoProducts.js` instead.
 
 **Fix.** Start the backend project
-([`dxiiren/laravel-inventory-api`](https://github.com/dxiiren/laravel-inventory-api)),
-or accept the empty state for frontend-only work. This is expected behavior, not a bug in
-this repo.
+([`dxiiren/laravel-inventory-api`](https://github.com/dxiiren/laravel-inventory-api)) and
+reload (or switch API type) to go live, or accept the demo fallback for frontend-only work.
+This is expected behavior, not a bug in this repo.
 
 ## `just start` window flashes and dies / "Port 8102 is already in use"
 

@@ -5,11 +5,30 @@
             <!-- ⬆ Upload Card -->
             <upload-product @uploadProducts="onSubmit" />
 
+            <!-- 🔔 Demo-data notice (backend unreachable) -->
+            <div v-if="demoMode && !demoBannerDismissed" data-testid="demo-banner"
+                class="flex items-start justify-between gap-4 bg-amber-50 border border-amber-300 text-amber-800 rounded-2xl shadow-sm px-6 py-4">
+                <p class="text-sm leading-relaxed">
+                    <span class="font-semibold">Demo data</span> — start
+                    <a href="https://github.com/dxiiren/laravel-inventory-api" target="_blank" rel="noopener"
+                        class="font-medium underline decoration-amber-400 underline-offset-2 hover:text-amber-900">
+                        laravel-inventory-api
+                    </a>
+                    on <code class="text-xs bg-amber-100 rounded px-1 py-0.5">http://127.0.0.1:8000</code>
+                    for live data.
+                </p>
+                <button type="button" data-testid="demo-banner-dismiss" aria-label="Dismiss demo data notice"
+                    @click="demoBannerDismissed = true"
+                    class="text-amber-500 hover:text-amber-700 text-lg leading-none cursor-pointer shrink-0">
+                    ✕
+                </button>
+            </div>
+
             <!-- 📦 Product Table Card -->
             <div class="bg-white rounded-2xl shadow-md p-6">
-                <product-index :productsData="productsData" 
+                <product-index :productsData="productsData" :loading="loading"
                     @apiCallTypeChanged="apiCallTypeChanged"
-                    @searchChanged="searchChanged" 
+                    @searchChanged="searchChanged"
                     @prevPage="prevPage" @nextPage="nextPage"
                 />
             </div>
@@ -21,6 +40,7 @@
 <script setup>
 import ProductIndex from '@/components/product/ProductIndex.vue'
 import UploadProduct from '@/components/UploadProduct.vue'
+import { fetchFromDemo } from '@/data/demoProducts'
 import axios from 'axios'
 import { ref, onMounted } from 'vue'
 
@@ -28,12 +48,16 @@ const baseURL = 'http://127.0.0.1:8000'
 
 const productsData = ref({
     data: [],
+    current_page: 1,
     last_page: 1,
     total: 0,
     per_page: 10
 })
 
 const currentPage = ref(1)
+const loading = ref(true)
+const demoMode = ref(false)
+const demoBannerDismissed = ref(false)
 
 onMounted(() => {
     getProducts()
@@ -84,6 +108,8 @@ async function onSubmit(values) {
 
 async function getProducts(search = '', apiCallType = 'graphql') {
 
+    loading.value = true
+
     try {
 
         const responseData = apiCallType === 'graphql'
@@ -92,9 +118,18 @@ async function getProducts(search = '', apiCallType = 'graphql') {
 
         productsData.value = responseData
         currentPage.value = responseData.current_page
+        demoMode.value = false
 
     } catch (error) {
-        console.error('Error loading products:', error)
+        // Backend unreachable — fall back to the static demo catalogue so the
+        // table stays browsable. The banner tells the user how to go live.
+        console.warn('Backend unreachable, serving demo data:', error)
+        demoMode.value = true
+        const demoData = fetchFromDemo(search, currentPage.value)
+        productsData.value = demoData
+        currentPage.value = demoData.current_page
+    } finally {
+        loading.value = false
     }
 }
 

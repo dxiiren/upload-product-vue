@@ -1,7 +1,7 @@
 # FAQ
 
 > **TL;DR** Short answers to the questions every new developer asks about this repo: ports,
-> the missing backend, empty tables, unused Pinia, missing tests, and the Claude Code files.
+> the missing backend, the demo-data fallback, unused Pinia, missing tests, and the Claude Code files.
 
 ## Why port 8102? Can I use 5173/3000?
 
@@ -18,10 +18,11 @@ project — [`dxiiren/laravel-inventory-api`](https://github.com/dxiiren/laravel
 on GitHub — clone and run it if you need real data. The base URL is hardcoded in
 `src/views/HomeView.vue`.
 
-## The table is empty and the console shows Axios errors. Is the app broken?
+## The table shows sample products and a "Demo data" banner. Is the app broken?
 
-No — that is the expected state when the `:8000` backend isn't running. The frontend loads,
-fetches fail, `console.error` logs them, and the table renders zero rows. See
+No — that is the expected state when the `:8000` backend isn't running. Fetches fail,
+`console.warn` logs them, and the app falls back to the static demo catalogue in
+`src/data/demoProducts.js` with a dismissible banner linking to the backend repo. See
 [`../06-troubleshooting/common-issues.md`](../06-troubleshooting/common-issues.md).
 
 ## What does the "API Type" dropdown do?

@@ -105,6 +105,34 @@ describe('HomeView', () => {
     expect(rows[0].text()).toContain('Initech')
   })
 
+  it('falls back to demo data with a dismissible banner when the backend is unreachable', async () => {
+    axios.post.mockRejectedValue(new Error('ECONNREFUSED'))
+    const consoleWarn = vi.spyOn(console, 'warn').mockImplementation(() => {})
+
+    const wrapper = mountHome()
+    await flushPromises()
+
+    // Demo catalogue rendered instead of an empty table
+    const rows = wrapper.findAll('tbody tr')
+    expect(rows.length).toBeGreaterThanOrEqual(5)
+    expect(rows.length).toBeLessThanOrEqual(8)
+    expect(wrapper.text()).not.toContain('NaN')
+
+    // Banner points at the companion backend and can be dismissed
+    const banner = wrapper.find('[data-testid="demo-banner"]')
+    expect(banner.exists()).toBe(true)
+    expect(banner.text()).toContain('Demo data')
+    expect(banner.text()).toContain('laravel-inventory-api')
+    expect(banner.find('a').attributes('href')).toContain('laravel-inventory-api')
+
+    await banner.find('[data-testid="demo-banner-dismiss"]').trigger('click')
+    expect(wrapper.find('[data-testid="demo-banner"]').exists()).toBe(false)
+    // Demo rows stay after dismissing the notice
+    expect(wrapper.findAll('tbody tr').length).toBeGreaterThanOrEqual(5)
+
+    consoleWarn.mockRestore()
+  })
+
   it('posts the spreadsheet to the import endpoint on upload', async () => {
     vi.stubGlobal('alert', vi.fn())
 

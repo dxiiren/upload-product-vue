@@ -41,9 +41,28 @@
                 </tr>
             </thead>
             <tbody>
-                <tr v-for="(item, index) in filteredData" :key="item.id" class="hover:bg-gray-50">
-                    <td class="px-4 py-2">{{ ((props.productsData.current_page - 1) * props.productsData.per_page) +
-                        index + 1 }}</td>
+                <!-- Loading skeleton -->
+                <template v-if="props.loading">
+                    <tr v-for="n in 5" :key="`skeleton-${n}`" data-testid="skeleton-row" class="animate-pulse">
+                        <td v-for="col in 7" :key="col" class="px-4 py-3">
+                            <div class="h-3 rounded bg-gray-200"></div>
+                        </td>
+                    </tr>
+                </template>
+
+                <!-- Empty state -->
+                <tr v-else-if="filteredData.length === 0">
+                    <td colspan="7" class="px-4 py-12 text-center">
+                        <p class="text-gray-700 font-medium">No products found</p>
+                        <p class="text-gray-500 text-sm mt-1">
+                            Upload an .xlsx file above or adjust your search.
+                        </p>
+                    </td>
+                </tr>
+
+                <!-- Rows -->
+                <tr v-else v-for="(item, index) in filteredData" :key="item.id" class="hover:bg-gray-50">
+                    <td class="px-4 py-2">{{ pageOffset + index + 1 }}</td>
                     <td class="px-4 py-2">{{ item.id }}</td>
                     <td class="px-4 py-2">{{ item.type }}</td>
                     <td class="px-4 py-2">{{ item.brand }}</td>
@@ -58,20 +77,15 @@
     <!-- Pagination -->
     <div class="flex justify-between items-center mt-3">
         <p class="text-sm">
-            Showing
-            {{ props.productsData.data.length ? ((props.productsData.current_page - 1) * props.productsData.per_page +
-                1) : 0 }}
-            to
-            {{ ((props.productsData.current_page - 1) * props.productsData.per_page) + filteredData.length }}
-            of {{ props.productsData.total }} entries
+            Showing {{ showingFrom }} to {{ showingTo }} of {{ totalEntries }} entries
         </p>
         <div class="flex items-center gap-2">
-            <button @click="prevPage" :disabled="props.productsData.current_page <= 1"
+            <button @click="prevPage" :disabled="currentPage <= 1"
                 class="text-blue-500 text-sm hover:underline disabled:text-gray-400">
                 Previous
             </button>
-            <span class="px-2 py-1 text-sm border rounded">{{ props.productsData.current_page }}</span>
-            <button @click="nextPage" :disabled="props.productsData.current_page >= props.productsData.last_page"
+            <span class="px-2 py-1 text-sm border rounded">{{ currentPage }}</span>
+            <button @click="nextPage" :disabled="currentPage >= lastPage"
                 class="text-blue-500 text-sm hover:underline disabled:text-gray-400">
                 Next
             </button>
@@ -92,7 +106,23 @@ const props = defineProps({
         type: Object,
         required: true
     },
+    loading: {
+        type: Boolean,
+        default: false
+    },
 })
+
+// ── Guarded pagination math ──────────────────────────────────────────────
+// The initial productsData (before any fetch resolves) may lack current_page /
+// per_page; coercing through Number(...) || fallback prevents the old
+// "Showing 0 to NaN of 0 entries" bug.
+const currentPage = computed(() => Number(props.productsData.current_page) || 1)
+const perPage = computed(() => Number(props.productsData.per_page) || 0)
+const lastPage = computed(() => Number(props.productsData.last_page) || 1)
+const totalEntries = computed(() => Number(props.productsData.total) || 0)
+const pageOffset = computed(() => (currentPage.value - 1) * perPage.value)
+const showingFrom = computed(() => (filteredData.value.length ? pageOffset.value + 1 : 0))
+const showingTo = computed(() => pageOffset.value + filteredData.value.length)
 
 const search = useDebouncedRef('', 500)
 const apiCallType = ref('graphql')

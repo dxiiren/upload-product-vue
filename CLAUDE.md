@@ -8,7 +8,8 @@
 A single-page Vue 3 + Vite frontend for a product master list: bulk-upload products from an
 `.xlsx` file and browse them in a searchable, paginated table that can fetch from a companion
 backend (expected at `http://127.0.0.1:8000`) over REST **or** GraphQL — the user switches the
-API type in the UI. Frontend only; without the backend the page renders but the table stays empty.
+API type in the UI. Frontend only; without the backend the app falls back to a static demo
+catalogue (`src/data/demoProducts.js`) plus a dismissible "Demo data" banner.
 
 - **Repo:** GitHub — `github.com/dxiiren/vue-inventory-ui`
 - **Runs locally only** — no CI/CD, no deployment target. `just start` serves on
@@ -69,8 +70,9 @@ vue-inventory-ui/
   line) — safe to run while other projects are serving.
 - The product table needs the companion backend on `http://127.0.0.1:8000`
   ([`github.com/dxiiren/laravel-inventory-api`](https://github.com/dxiiren/laravel-inventory-api) —
-  `/api/products`, `/api/graphql`, `/api/products/import`). Without it the page loads with an
-  empty table and console fetch errors — that is expected during frontend-only work.
+  `/api/products`, `/api/graphql`, `/api/products/import`). Without it the page serves the
+  static demo catalogue with a "Demo data" banner and console fetch warnings — that is
+  expected during frontend-only work.
 - Serve ONLY on port 8102 (`--strictPort`) — if the port is taken the dev server exits rather
   than hopping; run `just stop` first.
 - `npm run lint` is `eslint . --fix` (it EDITS files); `just test` runs `vitest --run` over

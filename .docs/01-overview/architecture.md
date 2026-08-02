@@ -83,7 +83,7 @@ Cards are plain utility classes (`bg-white rounded-2xl shadow-md p-6`).
 | --- | --- |
 | Pinia installed but only the scaffold `counter` store exists | all real state lives in `HomeView`; move it to a store if a second page ever needs it |
 | `alert()` + full page reload after upload | no toast system; reload refetches everything |
-| Errors logged to console only | no user-visible error state for failed fetches |
+| Failed fetches fall back to demo data | `src/data/demoProducts.js` catalogue + dismissible banner; warning logged to console |
 | Router has one route | About view scaffolded but commented out |
 
 ## Related docs

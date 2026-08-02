@@ -24,8 +24,8 @@ styling via the Vite plugin; Pinia is installed but effectively unused.
 
 Run `pwsh ./setup.ps1` once (installs Git, Node LTS, just, uv, Claude Code, gh — idempotent),
 reopen PowerShell, then `just install` and `just start`. The app is at `http://localhost:8102`.
-Expect an empty product table unless the companion backend is running on `:8000` — that is
-normal for frontend-only work. VSCode + the Vue (Volar) extension is the recommended IDE setup.
+Expect demo rows plus a "Demo data" banner unless the companion backend is running on
+`:8000` — that is normal for frontend-only work. VSCode + the Vue (Volar) extension is the recommended IDE setup.
 
 ## [03-development/workflow.md](03-development/workflow.md)
 
@@ -57,13 +57,13 @@ logic), and the meta folders (`.docs/`, `.claude/`, `justfile`, `setup.ps1`).
 
 ## [06-troubleshooting/common-issues.md](06-troubleshooting/common-issues.md)
 
-The issues actually hit while standing this repo up, each with symptom → cause → fix: empty
-product table with console fetch errors (backend on `:8000` not running), `--strictPort` exit
+The issues actually hit while standing this repo up, each with symptom → cause → fix: demo
+rows + banner with console fetch warnings (backend on `:8000` not running), `--strictPort` exit
 when 8102 is taken, tools not on PATH until PowerShell restarts, and the
 npm-scripts-that-write surprise (`lint`/`format` modify files).
 
 ## [07-faq/faq.md](07-faq/faq.md)
 
-Quick answers: why port 8102, where the backend lives, why the table is empty, why Pinia ships
+Quick answers: why port 8102, where the backend lives, why demo rows appear, why Pinia ships
 an unused counter store, why there are no tests yet, how the REST/GraphQL toggle works, and how
 `.mcp.json.stub` / `.mcp.json` relate for Claude Code users.

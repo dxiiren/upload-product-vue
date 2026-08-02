@@ -12,7 +12,8 @@
    instantly; watch the terminal for compile errors.
 3. **Edit** — see the map below for where things live.
 4. **Verify in the browser** — `http://localhost:8102`. For data-dependent work, run the
-   companion backend on `:8000`; for pure UI work the empty-table state is fine.
+   companion backend on `:8000`; for pure UI work the demo-data fallback (banner + sample
+   rows) is fine.
 5. **Quality gate (manual!)** — this repo has **no pre-commit hooks and no CI**. Before
    committing run:
 

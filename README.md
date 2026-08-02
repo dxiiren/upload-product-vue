@@ -8,9 +8,9 @@ the backend is a separate project (see [Backend](#backend) below).
 
 ![Vue Inventory UI app — upload card and product table](docs/images/app.png)
 
-*The app running on `http://localhost:8102` without the backend: the upload card and the
-Product Master List render, but the table is empty because every REST/GraphQL fetch fails.
-Start the backend to see data.*
+*The app running on `http://localhost:8102` without the backend: the table falls back to a
+built-in demo catalogue and a dismissible banner explains how to go live. Start the backend
+to see real data.*
 
 > **New developer? Start with [`.docs/tldr.md`](.docs/tldr.md)** — every doc summarised on one
 > page. The full guide lives in [`.docs/`](.docs/README.md).
@@ -33,8 +33,9 @@ The base URL is hardcoded as `http://127.0.0.1:8000` in `src/views/HomeView.vue`
 | `GET /api/products?page=N&search=…` | product list, REST mode |
 | `POST /api/graphql` | product list, GraphQL mode (`products` query) |
 
-Without the backend running, the page still loads but the table stays empty (see
-Troubleshooting).
+Without the backend running, the app falls back to **demo data**: a static catalogue of six
+sample products (`src/data/demoProducts.js`) renders in the table and a dismissible banner
+links to the backend repo (see Troubleshooting).
 
 ## Prerequisites
 
@@ -95,9 +96,11 @@ npm run test:unit      # watch mode
 Specs live next to the code they cover, e.g.
 `src/views/__tests__/HomeView.spec.js` — mounts the main view with a mocked axios
 module and asserts that the GraphQL fetch on mount renders table rows, that switching
-the API type re-fetches from the REST endpoint, and that an upload posts the
-spreadsheet as `FormData` to `/api/products/import`. No backend is needed: all HTTP
-is mocked with `vi.mock('axios')`.
+the API type re-fetches from the REST endpoint, that a failed fetch falls back to the
+demo catalogue with a dismissible banner, and that an upload posts the spreadsheet as
+`FormData` to `/api/products/import`. `src/components/product/__tests__/ProductIndex.spec.js`
+covers the guarded pagination summary (no `NaN`), the empty state, and the loading
+skeleton. No backend is needed: all HTTP is mocked with `vi.mock('axios')`.
 
 ## Troubleshooting
 
@@ -106,13 +109,14 @@ is mocked with `vi.mock('axios')`.
 Vite binds the IPv6 loopback (`[::1]`) on this setup — use `http://localhost:8102`, not the
 IPv4 literal.
 
-### Product table is empty and the console shows "Error loading products"
+### Table shows demo rows and a "Demo data" banner
 
 The app expects its backend API at `http://127.0.0.1:8000` (hardcoded in
-`src/views/HomeView.vue`). Without that backend running, the page still loads but every
-REST/GraphQL fetch fails and the table stays empty. Start
-[laravel-inventory-api](https://github.com/dxiiren/laravel-inventory-api),
-or expect an empty table during frontend-only work.
+`src/views/HomeView.vue`). When that backend is unreachable, every REST/GraphQL fetch
+fails and the app serves a static demo catalogue instead, with a banner linking to
+[laravel-inventory-api](https://github.com/dxiiren/laravel-inventory-api). Start the
+backend and reload (or switch API type) to fetch live data — the demo fallback and
+banner are expected during frontend-only work.
 
 ### `just start` window closes immediately / "Port 8102 is already in use"
 
@@ -140,11 +144,13 @@ vue-inventory-ui/
     main.js                # createApp + Pinia + router + VeeValidate plugin
     App.vue                # bare <router-view />
     router/index.js        # single route: / -> HomeView
-    views/HomeView.vue     # page shell: upload card + product table; all API calls
-    views/__tests__/HomeView.spec.js  # Vitest spec (mocked axios; render + endpoints)
+    views/HomeView.vue     # page shell: upload card + demo banner + table; all API calls
+    views/__tests__/HomeView.spec.js  # Vitest spec (mocked axios; render + endpoints + fallback)
     components/
       UploadProduct.vue    # .xlsx upload form (VeeValidate rules)
-      product/ProductIndex.vue  # searchable, paginated product table
+      product/ProductIndex.vue  # searchable, paginated product table (skeleton + empty state)
+      product/__tests__/ProductIndex.spec.js  # pagination guard, empty state, skeleton
+    data/demoProducts.js   # static demo catalogue + mock adapter (backend-down fallback)
     composables/useDebouncedRef.js  # 500 ms debounced customRef (search box)
     includes/validation.js # global VeeValidate plugin: rules + messages
     stores/counter.js      # Pinia scaffold store (unused)

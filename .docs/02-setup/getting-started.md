@@ -59,8 +59,9 @@ All data comes from a separate backend project expected at `http://127.0.0.1:800
 it:
 
 - the page renders normally;
-- the table shows "Showing 0 to 0 of 0 entries";
-- the browser console logs `Error loading products: AxiosError ...` — expected, not a bug.
+- the table serves a built-in demo catalogue (six sample products) with a dismissible
+  "Demo data" banner;
+- the browser console warns `Backend unreachable, serving demo data: ...` — expected, not a bug.
 
 Start that backend separately if you need real data or want to exercise the upload.
 

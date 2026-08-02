@@ -31,9 +31,10 @@ The app expects a Laravel-style backend at `http://127.0.0.1:8000` (hardcoded as
 Both list responses are normalized to the same shape before rendering:
 `{ data, current_page, last_page, total, per_page }`.
 
-**Without the backend running, the page still loads** — you get the upload card and an empty
-table, with `Error loading products:` messages in the browser console. That is expected during
-frontend-only work.
+**Without the backend running, the page still loads** — the table falls back to a static demo
+catalogue (`src/data/demoProducts.js`, six sample products) and a dismissible "Demo data"
+banner links to the backend repo; the console logs a `Backend unreachable` warning. That is
+expected during frontend-only work.
 
 ## What it is NOT
 

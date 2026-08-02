@@ -33,13 +33,17 @@ vue-inventory-ui/
 │   ├── router/
 │   │   └── index.js           # createWebHistory; single route '/' -> HomeView
 │   ├── views/
-│   │   ├── HomeView.vue       # THE page: layout shell + all API calls (REST/GraphQL/upload)
+│   │   ├── HomeView.vue       # THE page: layout shell + demo banner + all API calls (REST/GraphQL/upload)
 │   │   └── __tests__/
-│   │       └── HomeView.spec.js  # Vitest spec: mocked axios; render + endpoint assertions
+│   │       └── HomeView.spec.js  # Vitest spec: mocked axios; render + endpoints + demo fallback
 │   ├── components/
 │   │   ├── UploadProduct.vue  # .xlsx upload form (VeeValidate); emits uploadProducts
 │   │   └── product/
-│   │       └── ProductIndex.vue  # table + search + API-type select + pagination; emits events
+│   │       ├── ProductIndex.vue  # table + search + API-type select + pagination + skeleton/empty state
+│   │       └── __tests__/
+│   │           └── ProductIndex.spec.js  # pagination guard (no NaN), empty state, skeleton
+│   ├── data/
+│   │   └── demoProducts.js    # static demo catalogue + mock adapter (backend-down fallback)
 │   ├── composables/
 │   │   └── useDebouncedRef.js # customRef with 500 ms debounce (search box)
 │   ├── includes/
