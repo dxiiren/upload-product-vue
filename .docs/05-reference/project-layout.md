@@ -38,14 +38,20 @@ vue-inventory-ui/
 │   │       └── HomeView.spec.js  # Vitest spec: mocked axios; render + endpoints + demo fallback
 │   ├── components/
 │   │   ├── UploadProduct.vue  # .xlsx upload form (VeeValidate); emits uploadProducts
+│   │   ├── __tests__/
+│   │   │   └── UploadProduct.spec.js  # required + excluded MIME rules, uploadProducts emit
 │   │   └── product/
 │   │       ├── ProductIndex.vue  # table + search + API-type select + pagination + skeleton/empty state
 │   │       └── __tests__/
-│   │           └── ProductIndex.spec.js  # pagination guard (no NaN), empty state, skeleton
+│   │           └── ProductIndex.spec.js  # pagination guard (no NaN), debounced search, empty state, skeleton
 │   ├── data/
-│   │   └── demoProducts.js    # static demo catalogue + mock adapter (backend-down fallback)
+│   │   ├── demoProducts.js    # static demo catalogue + mock adapter (backend-down fallback)
+│   │   └── __tests__/
+│   │       └── demoProducts.spec.js  # search, page clamping, paginator shape contract
 │   ├── composables/
-│   │   └── useDebouncedRef.js # customRef with 500 ms debounce (search box)
+│   │   ├── useDebouncedRef.js # customRef with 500 ms debounce (search box)
+│   │   └── __tests__/
+│   │       └── useDebouncedRef.spec.js  # trailing-edge debounce, timer reset, custom delay
 │   ├── includes/
 │   │   └── validation.js      # global VeeValidate plugin: components, rules, messages
 │   ├── stores/

@@ -93,14 +93,16 @@ just test HomeView     # pass-through filter: only specs matching "HomeView"
 npm run test:unit      # watch mode
 ```
 
-Specs live next to the code they cover, e.g.
-`src/views/__tests__/HomeView.spec.js` — mounts the main view with a mocked axios
-module and asserts that the GraphQL fetch on mount renders table rows, that switching
-the API type re-fetches from the REST endpoint, that a failed fetch falls back to the
-demo catalogue with a dismissible banner, and that an upload posts the spreadsheet as
-`FormData` to `/api/products/import`. `src/components/product/__tests__/ProductIndex.spec.js`
-covers the guarded pagination summary (no `NaN`), the empty state, and the loading
-skeleton. No backend is needed: all HTTP is mocked with `vi.mock('axios')`.
+Specs live next to the code they cover — **81 tests across 5 files**. No backend is
+needed: all HTTP is mocked with `vi.mock('axios')`.
+
+| Spec | Covers |
+| --- | --- |
+| `src/views/__tests__/HomeView.spec.js` | GraphQL fetch on mount, the REST switch, search wiring (`?search=` for REST vs `variables.filter.search` for GraphQL), the `prevPage`/`nextPage` boundary guards, the demo-data fallback on **both** transports, and the import happy/sad paths |
+| `src/components/product/__tests__/ProductIndex.spec.js` | Guarded pagination summary (no `NaN`), page-offset row numbering, empty state, loading skeleton, the 500 ms debounced search, the API-type switch, and the Previous/Next disabled states |
+| `src/components/__tests__/UploadProduct.spec.js` | The `required` + `excluded` MIME rules (mounted with the real VeeValidate plugin) and the `uploadProducts` emit |
+| `src/composables/__tests__/useDebouncedRef.spec.js` | Trailing-edge debounce, timer reset on rapid sets, custom/default delays |
+| `src/data/__tests__/demoProducts.spec.js` | Case-insensitive search across all fields, page clamping, and the paginator shape contract shared with the REST/GraphQL adapters |
 
 ## Troubleshooting
 
@@ -148,10 +150,13 @@ vue-inventory-ui/
     views/__tests__/HomeView.spec.js  # Vitest spec (mocked axios; render + endpoints + fallback)
     components/
       UploadProduct.vue    # .xlsx upload form (VeeValidate rules)
+      __tests__/UploadProduct.spec.js  # MIME rules + uploadProducts emit
       product/ProductIndex.vue  # searchable, paginated product table (skeleton + empty state)
-      product/__tests__/ProductIndex.spec.js  # pagination guard, empty state, skeleton
+      product/__tests__/ProductIndex.spec.js  # pagination guard, search debounce, empty state, skeleton
     data/demoProducts.js   # static demo catalogue + mock adapter (backend-down fallback)
+    data/__tests__/demoProducts.spec.js  # search, page clamping, paginator shape contract
     composables/useDebouncedRef.js  # 500 ms debounced customRef (search box)
+    composables/__tests__/useDebouncedRef.spec.js  # trailing-edge debounce semantics
     includes/validation.js # global VeeValidate plugin: rules + messages
     stores/counter.js      # Pinia scaffold store (unused)
     assets/                # Tailwind v4 entry css + base styles

@@ -40,8 +40,9 @@ routes/components; delete `counter.js` whenever a real store replaces it as the 
 ## How do I run the tests?
 
 `just test` runs Vitest once (jsdom + @vue/test-utils, mocked axios — no backend needed);
-`just test HomeView` filters by spec name. Specs live in `src/**/__tests__/*.spec.js`
-(currently `src/views/__tests__/HomeView.spec.js`). See the testing section in
+`just test HomeView` filters by spec name. Specs live in `src/**/__tests__/*.spec.js` — 81
+tests covering `HomeView`, `ProductIndex`, `UploadProduct`, `useDebouncedRef`, and
+`demoProducts`. See the testing section in
 [`../03-development/workflow.md`](../03-development/workflow.md).
 
 ## Why did upload accept my file but nothing happened?

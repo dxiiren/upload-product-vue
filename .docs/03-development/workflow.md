@@ -60,11 +60,23 @@ Vitest 3 is configured (`vitest.config.js`: jsdom env, merges the Vite config so
 alias works in specs, excludes `e2e/**`) with `@vue/test-utils` + `jsdom`. `just test` runs
 `vitest --run` and is a real gate — run it before committing (step 5).
 
-Specs live near the code as `src/**/__tests__/*.spec.js`. The first one,
-`src/views/__tests__/HomeView.spec.js`, mounts the main view with `vi.mock('axios')` and
-asserts the GraphQL fetch on mount renders rows, the REST switch hits `/api/products`, and
-an upload posts `FormData` to `/api/products/import` — no backend needed. Good next
-candidates: the logic-bearing modules (`useDebouncedRef`, the response normalizers).
+Specs live near the code as `src/**/__tests__/*.spec.js` — **81 tests across 5 files**, no
+backend needed:
+
+- `views/__tests__/HomeView.spec.js` — mounts the view with `vi.mock('axios')`: GraphQL fetch
+  on mount, the REST switch, how the search term reaches each transport, the `prevPage` /
+  `nextPage` boundary guards, the demo fallback on **both** transports, and the import
+  happy/sad paths (`window.location.reload` is stubbed with `vi.stubGlobal`).
+- `components/product/__tests__/ProductIndex.spec.js` — pagination guard (no `NaN`), page-offset
+  row numbering, empty state, skeleton, the debounced search, and the Previous/Next disabled
+  states. Uses `vi.useFakeTimers()` to run out the 500 ms debounce.
+- `components/__tests__/UploadProduct.spec.js` — mounts with the real VeeValidate plugin
+  (`global: { plugins: [VeeValidationPlugin] }`) so the `required` + `excluded` rules run.
+- `composables/__tests__/useDebouncedRef.spec.js` and `data/__tests__/demoProducts.spec.js` —
+  the logic-bearing modules, tested directly.
+
+There is no setup file and `globals` is off, so **every spec imports `describe` / `it` /
+`expect` / `vi` from `vitest` explicitly**.
 
 ## Working with Claude Code
 

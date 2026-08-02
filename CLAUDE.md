@@ -25,7 +25,7 @@ catalogue (`src/data/demoProducts.js`) plus a dismissible "Demo data" banner.
 | Forms | **VeeValidate 4** + `@vee-validate/rules` | global plugin `src/includes/validation.js`; upload rules `required` + `excluded` MIME |
 | HTTP | **axios** (+ raw GraphQL POST) | all calls in `src/views/HomeView.vue`; base URL hardcoded `http://127.0.0.1:8000` |
 | State | **Pinia 3** | installed; only the scaffold `counter` store exists (unused by pages) |
-| Tests | **Vitest 3** + jsdom + @vue/test-utils | configured in `vitest.config.js`; specs in `src/**/__tests__/*.spec.js` (mocked axios, no backend needed) |
+| Tests | **Vitest 3** + jsdom + @vue/test-utils | configured in `vitest.config.js`; **81 tests** in `src/**/__tests__/*.spec.js` (mocked axios, no backend needed). No setup file and no `globals` — every spec imports `describe`/`it`/`expect`/`vi` from `vitest` |
 | Quality | ESLint 9 flat config + Prettier 3 | `npm run lint` auto-fixes; `npm run format` writes `src/` |
 | Package manager | **npm** | Node LTS (verified on v24); `package-lock.json` committed |
 | Task runner | `just` | wraps npm scripts (`justfile`), port 8102 `--strictPort` |
@@ -42,8 +42,13 @@ vue-inventory-ui/
     views/HomeView.vue      # page shell + ALL API calls (REST + GraphQL + upload)
     views/__tests__/HomeView.spec.js      # Vitest spec (mocked axios)
     components/UploadProduct.vue          # .xlsx upload form
+    components/__tests__/UploadProduct.spec.js
     components/product/ProductIndex.vue   # searchable paginated table
+    components/product/__tests__/ProductIndex.spec.js
     composables/useDebouncedRef.js        # 500 ms debounced customRef
+    composables/__tests__/useDebouncedRef.spec.js
+    data/demoProducts.js    # demo catalogue + fetchFromDemo adapter (backend-down fallback)
+    data/__tests__/demoProducts.spec.js
     includes/validation.js  # VeeValidate rules + friendly messages
     stores/counter.js       # Pinia scaffold (unused)
     assets/                 # Tailwind v4 entry css

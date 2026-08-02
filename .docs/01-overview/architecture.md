@@ -23,7 +23,7 @@ never fetch; they emit.
 | Event (child → HomeView) | Emitted by | HomeView reaction |
 | --- | --- | --- |
 | `uploadProducts(values)` | UploadProduct | `POST /api/products/import` (multipart), alert, `window.location.reload()` |
-| `apiCallTypeChanged({apiCallType, search})` | ProductIndex | reset to page 1, refetch via the chosen API |
+| `apiCallTypeChanged({apiCallType, search})` | ProductIndex | reset to page 1, refetch via the chosen API. `search` is always `''`: switching transports clears the box, and ProductIndex swallows the trailing `searchChanged` its debounced clear would otherwise fire |
 | `searchChanged({apiCallType, search})` | ProductIndex | reset to page 1, refetch with the search term |
 | `prevPage` / `nextPage` | ProductIndex | guard bounds, adjust `currentPage`, refetch |
 
@@ -71,6 +71,12 @@ The upload field uses `rules="required|excluded:application/pdf,text/plain,image
 `accept=".xlsx"` — note the excluded-list approach blocks a few known-bad MIME types rather
 than allowlisting xlsx; the backend remains the real gatekeeper.
 
+`excluded` is registered with a thin wrapper rather than raw `not_one_of`: a file field's value
+is a `File` object, and `not_one_of` compares with loose `==`, so `File == 'application/pdf'`
+stringifies to `"[object File]"` and never matched — the blocklist silently accepted every MIME
+type. The wrapper passes `value.type` for `File` values and the value as-is otherwise (so the
+non-file aliases such as `country_excluded` are unaffected).
+
 ## Styling
 
 Tailwind CSS **v4** through `@tailwindcss/vite` — there is no `tailwind.config.js`; the CSS
@@ -83,7 +89,7 @@ Cards are plain utility classes (`bg-white rounded-2xl shadow-md p-6`).
 | --- | --- |
 | Pinia installed but only the scaffold `counter` store exists | all real state lives in `HomeView`; move it to a store if a second page ever needs it |
 | `alert()` + full page reload after upload | no toast system; reload refetches everything |
-| Failed fetches fall back to demo data | `src/data/demoProducts.js` catalogue + dismissible banner; warning logged to console |
+| Failed fetches fall back to demo data | `src/data/demoProducts.js` catalogue + dismissible banner; warning logged to console. The banner auto-hides once a fetch succeeds, but dismissing it is **sticky for the session** — it does not reappear on later failures |
 | Router has one route | About view scaffolded but commented out |
 
 ## Related docs
