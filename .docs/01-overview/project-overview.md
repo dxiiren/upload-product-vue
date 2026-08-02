@@ -39,7 +39,6 @@ frontend-only work.
 
 - Not a full-stack repo — no server code, no database, no schema for the `.xlsx` file.
 - Not deployed — no CI/CD, no hosting; it runs on `http://localhost:8102` via `just start`.
-- Not tested yet — Vitest + jsdom + `@vue/test-utils` are configured, but no spec files exist.
 - Not multi-page — the router has a single active route (`/`); an About route is scaffolded but
   commented out in `src/router/index.js`.
 
@@ -53,7 +52,7 @@ frontend-only work.
 | Forms | VeeValidate 4 + `@vee-validate/rules` | global plugin in `src/includes/validation.js` |
 | HTTP | axios | GraphQL is a plain axios POST, no client library |
 | State | Pinia 3 | installed; only the scaffold `counter` store exists (unused) |
-| Tests | Vitest 3 + jsdom | configured, no specs yet |
+| Tests | Vitest 3 + jsdom | specs in `src/**/__tests__/` (mocked axios; `just test`) |
 | Quality | ESLint 9 (flat) + Prettier 3 | no hooks, no CI — run manually |
 
 ## Related docs

@@ -24,7 +24,7 @@ API type in the UI. Frontend only; without the backend the page renders but the 
 | Forms | **VeeValidate 4** + `@vee-validate/rules` | global plugin `src/includes/validation.js`; upload rules `required` + `excluded` MIME |
 | HTTP | **axios** (+ raw GraphQL POST) | all calls in `src/views/HomeView.vue`; base URL hardcoded `http://127.0.0.1:8000` |
 | State | **Pinia 3** | installed; only the scaffold `counter` store exists (unused by pages) |
-| Tests | **Vitest 3** + jsdom + @vue/test-utils | configured in `vitest.config.js`; **no test files exist yet** |
+| Tests | **Vitest 3** + jsdom + @vue/test-utils | configured in `vitest.config.js`; specs in `src/**/__tests__/*.spec.js` (mocked axios, no backend needed) |
 | Quality | ESLint 9 flat config + Prettier 3 | `npm run lint` auto-fixes; `npm run format` writes `src/` |
 | Package manager | **npm** | Node LTS (verified on v24); `package-lock.json` committed |
 | Task runner | `just` | wraps npm scripts (`justfile`), port 8102 `--strictPort` |
@@ -39,6 +39,7 @@ upload-product-vue/
     App.vue                 # bare <router-view />
     router/index.js         # single route: / -> HomeView
     views/HomeView.vue      # page shell + ALL API calls (REST + GraphQL + upload)
+    views/__tests__/HomeView.spec.js      # Vitest spec (mocked axios)
     components/UploadProduct.vue          # .xlsx upload form
     components/product/ProductIndex.vue   # searchable paginated table
     composables/useDebouncedRef.js        # 500 ms debounced customRef
@@ -66,13 +67,14 @@ upload-product-vue/
   command for something a recipe already covers.
 - `just stop` kills only THIS repo's server processes (matched by repo path on the command
   line) — safe to run while other projects are serving.
-- The product table needs the companion backend on `http://127.0.0.1:8000` (Laravel-style
+- The product table needs the companion backend on `http://127.0.0.1:8000`
+  ([`github.com/dxiiren/upload-product-laravel-excel`](https://github.com/dxiiren/upload-product-laravel-excel) —
   `/api/products`, `/api/graphql`, `/api/products/import`). Without it the page loads with an
   empty table and console fetch errors — that is expected during frontend-only work.
 - Serve ONLY on port 8102 (`--strictPort`) — if the port is taken the dev server exits rather
   than hopping; run `just stop` first.
-- `npm run lint` is `eslint . --fix` (it EDITS files); `just test` runs `vitest --run` and
-  currently exits 1 with "No test files found" because no specs exist yet.
+- `npm run lint` is `eslint . --fix` (it EDITS files); `just test` runs `vitest --run` over
+  the specs in `src/**/__tests__/` — keep it green before committing.
 
 ## Project Skills
 

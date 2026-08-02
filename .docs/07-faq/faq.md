@@ -14,7 +14,8 @@ temporary different port, `$env:PORT=xxxx; just dev`.
 
 Not in this repo. The app expects a Laravel-style API at `http://127.0.0.1:8000`
 (`GET /api/products`, `POST /api/graphql`, `POST /api/products/import`). It is a separate
-project — ask the team for it if you need real data. The base URL is hardcoded in
+project — [`dxiiren/upload-product-laravel-excel`](https://github.com/dxiiren/upload-product-laravel-excel)
+on GitHub — clone and run it if you need real data. The base URL is hardcoded in
 `src/views/HomeView.vue`.
 
 ## The table is empty and the console shows Axios errors. Is the app broken?
@@ -35,11 +36,11 @@ It's the create-vue scaffold example, left in place. All real state lives in `Ho
 Use the store pattern (a new file in `src/stores/`) when state needs to be shared across
 routes/components; delete `counter.js` whenever a real store replaces it as the example.
 
-## Why does `just test` fail?
+## How do I run the tests?
 
-Vitest is fully configured (jsdom + @vue/test-utils) but no `*.spec.js` files exist yet, so
-vitest exits 1 with "No test files found". It's an honest red, not a broken setup — it goes
-green when the first spec lands. See the testing section in
+`just test` runs Vitest once (jsdom + @vue/test-utils, mocked axios — no backend needed);
+`just test HomeView` filters by spec name. Specs live in `src/**/__tests__/*.spec.js`
+(currently `src/views/__tests__/HomeView.spec.js`). See the testing section in
 [`../03-development/workflow.md`](../03-development/workflow.md).
 
 ## Why did upload accept my file but nothing happened?

@@ -33,7 +33,9 @@ upload-product-vue/
 │   ├── router/
 │   │   └── index.js           # createWebHistory; single route '/' -> HomeView
 │   ├── views/
-│   │   └── HomeView.vue       # THE page: layout shell + all API calls (REST/GraphQL/upload)
+│   │   ├── HomeView.vue       # THE page: layout shell + all API calls (REST/GraphQL/upload)
+│   │   └── __tests__/
+│   │       └── HomeView.spec.js  # Vitest spec: mocked axios; render + endpoint assertions
 │   ├── components/
 │   │   ├── UploadProduct.vue  # .xlsx upload form (VeeValidate); emits uploadProducts
 │   │   └── product/

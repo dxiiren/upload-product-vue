@@ -25,8 +25,10 @@ errors on load and on every search keystroke.
 **Cause.** The companion backend at `http://127.0.0.1:8000` isn't running — the base URL is
 hardcoded in `src/views/HomeView.vue` and every list/upload call needs it.
 
-**Fix.** Start the backend project (separate repo), or accept the empty state for
-frontend-only work. This is expected behavior, not a bug in this repo.
+**Fix.** Start the backend project
+([`dxiiren/upload-product-laravel-excel`](https://github.com/dxiiren/upload-product-laravel-excel)),
+or accept the empty state for frontend-only work. This is expected behavior, not a bug in
+this repo.
 
 ## `just start` window flashes and dies / "Port 8102 is already in use"
 
@@ -39,22 +41,6 @@ usually a lingering server from a previous session or another app squatting the 
 **Fix.** `just stop` (kills only this repo's node processes). If it reports 0 stopped, find
 the squatter: `netstat -ano | findstr :8102`, then `Stop-Process -Id <pid>` after confirming
 it's yours. To debug startup output, use `just dev` (foreground) — the error stays visible.
-
-## `just test` exits 1: "No test files found"
-
-**Symptom.**
-
-```
-No test files found, exiting with code 1
-include: **/*.{test,spec}.?(c|m)[jt]s?(x)
-```
-
-**Cause.** Vitest is configured but the repo contains zero spec files. This is the honest
-current state, not a broken setup.
-
-**Fix.** Nothing to fix until tests are written — the recipe goes green when the first
-`*.spec.js` lands under `src/`. See the testing section of
-[`../03-development/workflow.md`](../03-development/workflow.md).
 
 ## `just` / `node` / `uv` not recognized right after setup.ps1
 

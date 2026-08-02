@@ -32,8 +32,8 @@ normal for frontend-only work. VSCode + the Vue (Volar) extension is the recomme
 Branch off `main`, edit with the dev server running (`just start`, HMR does the rest), verify in
 the browser, then `just lint` + `just format` before committing (there are no hooks or CI to
 catch you). Conventional Commits, no attribution footers, PRs into `main`. Vitest is configured
-but the repo has no specs yet — `just test` exits 1 with "No test files found" until someone
-writes the first one.
+and `just test` runs the specs in `src/**/__tests__/` (mocked axios, no backend needed) — run
+it before committing.
 
 ## [04-deployment/deployment.md](04-deployment/deployment.md)
 
@@ -47,7 +47,7 @@ base URL must become configurable first.
 The full `just` recipe table (install/start/dev/stop/build/preview/lint/format/test/claudex) and
 the underlying npm scripts, with the gotchas: `start` runs `--strictPort` on 8102, `stop` only
 kills node processes whose command line contains this repo's path, `lint` and `format` both
-WRITE to files, and `test` currently fails by design (no specs).
+WRITE to files, and `test` runs the Vitest specs once (`vitest --run`).
 
 ## [05-reference/project-layout.md](05-reference/project-layout.md)
 
@@ -59,8 +59,8 @@ logic), and the meta folders (`.docs/`, `.claude/`, `justfile`, `setup.ps1`).
 
 The issues actually hit while standing this repo up, each with symptom → cause → fix: empty
 product table with console fetch errors (backend on `:8000` not running), `--strictPort` exit
-when 8102 is taken, tools not on PATH until PowerShell restarts, vitest exiting 1 with no test
-files, and the npm-scripts-that-write surprise (`lint`/`format` modify files).
+when 8102 is taken, tools not on PATH until PowerShell restarts, and the
+npm-scripts-that-write surprise (`lint`/`format` modify files).
 
 ## [07-faq/faq.md](07-faq/faq.md)
 

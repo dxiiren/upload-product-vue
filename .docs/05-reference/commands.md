@@ -16,7 +16,7 @@
 | `just preview` | `npm run preview -- --port 8102` | serves the built `dist/` — run `just build` first |
 | `just lint` | `npm run lint` (`eslint . --fix`) | **writes fixes to files**; read-only check: `npx eslint .` |
 | `just format` | `npm run format` (`prettier --write src/`) | **writes**; read-only check: `npx prettier --check src/` |
-| `just test [flags]` | `npm run test:unit -- --run [flags]` (`vitest --run`) | exits 1 with "No test files found" until specs exist; flags pass through to vitest (e.g. a filename filter) |
+| `just test [flags]` | `npm run test:unit -- --run [flags]` (`vitest --run`) | runs specs in `src/**/__tests__/`; flags pass through to vitest (e.g. `just test HomeView` as a filename filter) |
 | `just claudex` | `claude --dangerously-skip-permissions --model sonnet` | Claude Code, full permissions |
 | `just claudeo` | same, `--model opus` | |
 | `just claudeh` | same, `--model haiku` | |

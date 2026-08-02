@@ -53,15 +53,17 @@
 - Keep both fetchers returning the normalized paginator shape
   (`data/current_page/last_page/total/per_page`) — the template depends on it.
 
-## Testing (current state)
+## Testing
 
-Vitest 3 is configured (`vitest.config.js`: jsdom env, merges the Vite config, excludes
-`e2e/**`) and `@vue/test-utils` + `jsdom` are installed — but **no spec files exist yet**, so
-`just test` (which runs `vitest --run`) exits 1 with "No test files found".
+Vitest 3 is configured (`vitest.config.js`: jsdom env, merges the Vite config so the `@`
+alias works in specs, excludes `e2e/**`) with `@vue/test-utils` + `jsdom`. `just test` runs
+`vitest --run` and is a real gate — run it before committing (step 5).
 
-When adding the first tests: name them `*.spec.js` (or `*.test.js`) near the code under
-`src/`, and start with the logic-bearing modules (`useDebouncedRef`, the response
-normalizers). After the first spec lands, `just test` becomes a real gate — add it to step 5.
+Specs live near the code as `src/**/__tests__/*.spec.js`. The first one,
+`src/views/__tests__/HomeView.spec.js`, mounts the main view with `vi.mock('axios')` and
+asserts the GraphQL fetch on mount renders rows, the REST switch hits `/api/products`, and
+an upload posts `FormData` to `/api/products/import` — no backend needed. Good next
+candidates: the logic-bearing modules (`useDebouncedRef`, the response normalizers).
 
 ## Working with Claude Code
 
