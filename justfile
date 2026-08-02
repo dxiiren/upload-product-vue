@@ -57,9 +57,7 @@ lint: _require-node
 format: _require-node
     npm run format
 
-# NOTE: no test files exist yet — vitest exits 1 with "No test files found"
-# until specs are added.
-# Run unit tests once (vitest run).
+# Run unit tests once (vitest run). Specs live in src/**/__tests__/*.spec.js.
 test *flags: _require-node
     npm run test:unit -- --run {{flags}}
 
