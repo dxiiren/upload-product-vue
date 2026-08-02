@@ -7,7 +7,7 @@
 ## Annotated tree
 
 ```
-upload-product-vue/
+vue-inventory-ui/
 ├── index.html                 # Vite entry page (#app mount point, loads src/main.js)
 ├── vite.config.js             # plugins: vue, vue-devtools, Tailwind v4; '@' alias -> src/
 ├── vitest.config.js           # merges vite.config.js; jsdom env; excludes e2e/**

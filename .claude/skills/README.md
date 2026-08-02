@@ -1,4 +1,4 @@
-# Skills Catalog — `upload-product-vue`
+# Skills Catalog — `vue-inventory-ui`
 
 Project development skills for this Vue 3 / Vite / plain-JS / Tailwind v4 product-upload SPA (GitHub, local-only — no CI/CD). Each lives in its own directory with a `SKILL.md`. **Follow the relevant skill before writing code.** Run `/audit-skills` to verify every skill here is registered and that `CLAUDE.md` references only existing skills.
 

@@ -1,4 +1,4 @@
-# Upload Product — Developer Documentation
+# Vue Inventory UI — Developer Documentation
 
 > **New here? Start with [`tldr.md`](tldr.md)** — every document below summarised in 30 seconds
 > each, with links into the full versions.

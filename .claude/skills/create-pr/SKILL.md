@@ -7,7 +7,7 @@ model: opus
 # Create PR — Push branch, open a GitHub PR into `main`
 
 Open a GitHub pull request from the current feature branch into `main` on
-`github.com/dxiiren/upload-product-vue`. This repo has no CI and no deploy pipeline —
+`github.com/dxiiren/vue-inventory-ui`. This repo has no CI and no deploy pipeline —
 nothing will comment on the PR automatically; review is manual.
 
 ## Trigger

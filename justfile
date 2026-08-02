@@ -1,4 +1,4 @@
-# Upload Product justfile — development recipes
+# Vue Inventory UI justfile — development recipes
 
 set shell := ["powershell.exe", "-NoProfile", "-Command"]
 

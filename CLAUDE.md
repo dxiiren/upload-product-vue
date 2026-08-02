@@ -1,16 +1,16 @@
-# CLAUDE.md — upload-product-vue
+# CLAUDE.md — vue-inventory-ui
 
 > Human-facing developer docs live in [`.docs/`](./.docs/README.md) — start at
 > [`.docs/tldr.md`](./.docs/tldr.md). Keep them in sync when changing behavior they document.
 
-## Project: Upload Product
+## Project: Vue Inventory UI
 
 A single-page Vue 3 + Vite frontend for a product master list: bulk-upload products from an
 `.xlsx` file and browse them in a searchable, paginated table that can fetch from a companion
 backend (expected at `http://127.0.0.1:8000`) over REST **or** GraphQL — the user switches the
 API type in the UI. Frontend only; without the backend the page renders but the table stays empty.
 
-- **Repo:** GitHub — `github.com/dxiiren/upload-product-vue`
+- **Repo:** GitHub — `github.com/dxiiren/vue-inventory-ui`
 - **Runs locally only** — no CI/CD, no deployment target. `just start` serves on
   `http://localhost:8102`.
 
@@ -32,7 +32,7 @@ API type in the UI. Frontend only; without the backend the page renders but the 
 ### Project Structure
 
 ```
-upload-product-vue/
+vue-inventory-ui/
   index.html, vite.config.js, vitest.config.js, eslint.config.js
   src/
     main.js                 # createApp + Pinia + router + VeeValidate plugin
@@ -68,7 +68,7 @@ upload-product-vue/
 - `just stop` kills only THIS repo's server processes (matched by repo path on the command
   line) — safe to run while other projects are serving.
 - The product table needs the companion backend on `http://127.0.0.1:8000`
-  ([`github.com/dxiiren/upload-product-laravel-excel`](https://github.com/dxiiren/upload-product-laravel-excel) —
+  ([`github.com/dxiiren/laravel-inventory-api`](https://github.com/dxiiren/laravel-inventory-api) —
   `/api/products`, `/api/graphql`, `/api/products/import`). Without it the page loads with an
   empty table and console fetch errors — that is expected during frontend-only work.
 - Serve ONLY on port 8102 (`--strictPort`) — if the port is taken the dev server exits rather

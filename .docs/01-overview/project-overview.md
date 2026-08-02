@@ -1,6 +1,6 @@
 # Project Overview
 
-> **TL;DR** Upload Product is a frontend-only Vue 3 + Vite SPA with two features: bulk-upload a
+> **TL;DR** Vue Inventory UI is a frontend-only Vue 3 + Vite SPA with two features: bulk-upload a
 > product master list from an `.xlsx` file, and browse that list in a searchable, paginated
 > table whose data source is switchable between REST and GraphQL. All data comes from a
 > companion backend expected at `http://127.0.0.1:8000` (separate project, not in this repo).

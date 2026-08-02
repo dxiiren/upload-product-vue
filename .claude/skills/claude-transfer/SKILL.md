@@ -185,6 +185,6 @@ Grounded in primary sources, adversarially fact-checked (deep-research run):
 
 ## Evolution Log
 
-- Ported from akmal-resume-website for upload-product-vue: pointer-based, read only on
+- Ported from akmal-resume-website for vue-inventory-ui: pointer-based, read only on
   explicit resume, never auto-loaded; SCOPE GUARD + freshness re-verify. Commands + freshness
   checks adapted to this repo (just recipes, port 8102, the :8000 backend dependency).

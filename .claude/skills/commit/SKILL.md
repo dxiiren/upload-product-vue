@@ -138,6 +138,6 @@ scope: upload, products, views, router, composables, styles, config, tooling, do
 
 ## Evolution Log
 
-- Ported from akmal-resume-website for upload-product-vue: same fast-path/scoped pipeline;
+- Ported from akmal-resume-website for vue-inventory-ui: same fast-path/scoped pipeline;
   scope table rewritten for this repo's paths; hook-failure handling dropped (this repo has
   no pre-commit framework / commitizen / gitleaks hooks).

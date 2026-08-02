@@ -14,7 +14,7 @@ temporary different port, `$env:PORT=xxxx; just dev`.
 
 Not in this repo. The app expects a Laravel-style API at `http://127.0.0.1:8000`
 (`GET /api/products`, `POST /api/graphql`, `POST /api/products/import`). It is a separate
-project — [`dxiiren/upload-product-laravel-excel`](https://github.com/dxiiren/upload-product-laravel-excel)
+project — [`dxiiren/laravel-inventory-api`](https://github.com/dxiiren/laravel-inventory-api)
 on GitHub — clone and run it if you need real data. The base URL is hardcoded in
 `src/views/HomeView.vue`.
 

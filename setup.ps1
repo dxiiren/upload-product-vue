@@ -1,6 +1,6 @@
 #!/usr/bin/env pwsh
 
-# Upload Product Bootstrap Setup
+# Vue Inventory UI Bootstrap Setup
 #
 # Installs required development tools for local development.
 # Works on a FRESH PC -- only prerequisites are PowerShell and winget.
@@ -45,7 +45,7 @@ function Add-UserPath($Dir) {
 }
 
 Write-Host ""
-Write-Host "Upload Product Bootstrap Setup" -ForegroundColor Cyan
+Write-Host "Vue Inventory UI Bootstrap Setup" -ForegroundColor Cyan
 Write-Host "==================================" -ForegroundColor Cyan
 Write-Host ""
 

@@ -286,6 +286,6 @@ That's the shape of every handoff - scale each section up or down to fit the tas
 
 ## Evolution Log
 
-- Ported from akmal-resume-website for upload-product-vue: same 9-section framework and
+- Ported from akmal-resume-website for vue-inventory-ui: same 9-section framework and
   dual-mode delivery; persona, stack constraints, and the worked example adapted to this
   repo (Vue 3 + Vite + plain JS, the useDebouncedRef composable).

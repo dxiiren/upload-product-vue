@@ -1,4 +1,4 @@
-# Upload Product
+# Vue Inventory UI
 
 A single-page Vue 3 + Vite app for managing a product master list: bulk-upload products
 from an `.xlsx` file and browse the list in a searchable, paginated table. The table can
@@ -6,7 +6,7 @@ fetch its data from a companion backend over **REST or GraphQL** (user-switchabl
 the upload posts the spreadsheet to the same backend. This repo is the frontend only —
 the backend is a separate project (see [Backend](#backend) below).
 
-![Upload Product app — upload card and product table](docs/images/app.png)
+![Vue Inventory UI app — upload card and product table](docs/images/app.png)
 
 *The app running on `http://localhost:8102` without the backend: the upload card and the
 Product Master List render, but the table is empty because every REST/GraphQL fetch fails.
@@ -18,7 +18,7 @@ Start the backend to see data.*
 ## Backend
 
 This UI talks to
-**[upload-product-laravel-excel](https://github.com/dxiiren/upload-product-laravel-excel)** —
+**[laravel-inventory-api](https://github.com/dxiiren/laravel-inventory-api)** —
 a Laravel API that imports the uploaded spreadsheet via Laravel Excel and serves the
 product list over both REST and GraphQL. It also has features this UI does not surface
 yet: a per-upload **import report** (row-level accepted/rejected results) and **idempotent
@@ -111,7 +111,7 @@ IPv4 literal.
 The app expects its backend API at `http://127.0.0.1:8000` (hardcoded in
 `src/views/HomeView.vue`). Without that backend running, the page still loads but every
 REST/GraphQL fetch fails and the table stays empty. Start
-[upload-product-laravel-excel](https://github.com/dxiiren/upload-product-laravel-excel),
+[laravel-inventory-api](https://github.com/dxiiren/laravel-inventory-api),
 or expect an empty table during frontend-only work.
 
 ### `just start` window closes immediately / "Port 8102 is already in use"
@@ -130,7 +130,7 @@ More in [`.docs/06-troubleshooting/common-issues.md`](.docs/06-troubleshooting/c
 ## Project layout
 
 ```
-upload-product-vue/
+vue-inventory-ui/
   index.html               # Vite entry page
   vite.config.js           # Vue + devtools + Tailwind v4 plugins, @ -> src alias
   vitest.config.js         # jsdom test env (merges vite.config.js)

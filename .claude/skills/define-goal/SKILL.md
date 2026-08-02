@@ -150,6 +150,6 @@ Five pillars, distilled from a real overnight failure and its fix:
 
 ## Evolution Log
 
-- Ported from akmal-resume-website for upload-product-vue - same interrogation -> confirm-until-100%
+- Ported from akmal-resume-website for vue-inventory-ui - same interrogation -> confirm-until-100%
   -> stop-proof `{topic}-goal.md` flow and the five stop-proof pillars; examples and environment
   bootstrap adapted to this repo (Vue 3 + Vite, plain JS, port 8102, no coverage gate, no deploy).

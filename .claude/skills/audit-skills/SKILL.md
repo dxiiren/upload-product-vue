@@ -117,6 +117,6 @@ evolving it:
 
 ## Evolution Log
 
-- Ported from akmal-resume-website for upload-product-vue (Vue 3 / Vite / plain-JS
+- Ported from akmal-resume-website for vue-inventory-ui (Vue 3 / Vite / plain-JS
   stack); `audit.py` copied verbatim — it is repo-agnostic (stdlib-only, reads
   `.claude/skills/` + `CLAUDE.md` relative to the repo root).

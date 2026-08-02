@@ -4,7 +4,7 @@ One paragraph per document. Read this page top to bottom and you know where ever
 
 ## [01-overview/project-overview.md](01-overview/project-overview.md)
 
-Upload Product is a single-page Vue 3 + Vite frontend for a product master list. It does two
+Vue Inventory UI is a single-page Vue 3 + Vite frontend for a product master list. It does two
 things: upload an `.xlsx` of products to a backend (`POST /api/products/import`) and browse the
 list in a searchable, paginated table. A UI dropdown switches the table's data source between
 REST and GraphQL — both are served by a companion backend expected at `http://127.0.0.1:8000`,

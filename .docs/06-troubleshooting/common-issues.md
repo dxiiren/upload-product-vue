@@ -26,7 +26,7 @@ errors on load and on every search keystroke.
 hardcoded in `src/views/HomeView.vue` and every list/upload call needs it.
 
 **Fix.** Start the backend project
-([`dxiiren/upload-product-laravel-excel`](https://github.com/dxiiren/upload-product-laravel-excel)),
+([`dxiiren/laravel-inventory-api`](https://github.com/dxiiren/laravel-inventory-api)),
 or accept the empty state for frontend-only work. This is expected behavior, not a bug in
 this repo.
 
