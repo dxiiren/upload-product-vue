@@ -127,14 +127,27 @@ const showingTo = computed(() => pageOffset.value + filteredData.value.length)
 const search = useDebouncedRef('', 500)
 const apiCallType = ref('graphql')
 
+// `search` is debounced, so `search.value = ''` does not land until the delay
+// elapses — reading it back straight after still yields the stale term. Track
+// the pending reset so the API-type switch can report the cleared search up
+// front and swallow the trailing searchChanged the delayed clear would fire
+// (which refetched the identical list a second time).
+let pendingApiSwitchClear = false
+
 watch(search, (newValue) => {
     const searchValue = newValue.length > 0 ? newValue : ''
+    const isApiSwitchClear = pendingApiSwitchClear && searchValue === ''
+    pendingApiSwitchClear = false
+
+    if (isApiSwitchClear) return
+
     emit('searchChanged', { apiCallType: apiCallType.value, search: searchValue })
 })
 
 watch(apiCallType, (newValue) => {
+    pendingApiSwitchClear = search.value !== ''
     search.value = ''
-    emit('apiCallTypeChanged', { apiCallType: newValue, search: search.value })
+    emit('apiCallTypeChanged', { apiCallType: newValue, search: '' })
 })
 
 const filteredData = computed(() => {
