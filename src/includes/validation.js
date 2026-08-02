@@ -32,7 +32,13 @@ export default {
         defineRule('min_value', minValue)
         defineRule('max_value', maxValue)
         defineRule('confirmed', confirmed)
-        defineRule('excluded', excluded)
+        // `excluded` guards the upload field, whose value is a File object, not a
+        // string. `not_one_of` compares with loose `==`, and `File == 'application/pdf'`
+        // stringifies to "[object File]" — so the blocklist silently matched nothing
+        // and every MIME type was accepted. Compare the File's MIME type instead.
+        defineRule('excluded', (value, params) =>
+            excluded(typeof File !== 'undefined' && value instanceof File ? value.type : value, params),
+        )
         defineRule('country_excluded', excluded)
         defineRule('password_mismatch', confirmed)
 
